@@ -14,7 +14,7 @@ Basic usage:
 python3 img_median.py data/*.tif
 ```
 This does median from the data directory images and stores the output
-to a file named `median.tif` in the working directory.
+to a file named `median.tif` in the current working directory.
 
 Image offset
 ------------
@@ -50,4 +50,4 @@ Limitations
 
 License
 -------
-BSD-3-Clause license. See `LICENSE.txt` for full text.
+BSD-3-Clause license. See the `LICENSE` file for full text.
