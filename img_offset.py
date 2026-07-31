@@ -5,14 +5,14 @@
 # Copyright (c) 2026 Petr Krajník. All rights reserved.
 # SPDX-License-Identifier: BSD-3-Clause
 
-from pathlib import Path
-from typing  import Any, TypeGuard
-
 import argparse
 import functools
+import sys
+from pathlib import Path
+from typing import Any, TypeGuard
+
 import numpy as np
 import numpy.typing as npt
-import sys
 import tifffile
 
 type ArrayU = npt.NDArray[np.unsignedinteger[Any]]
@@ -113,7 +113,7 @@ def load_file_fft(
         if should_blur(blur):
             img_fft *= get_gaussian_rfft(img.shape, blur)
         return img_fft
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         proc_error(filepath, msg=f"{e}")
         return None
 

@@ -5,12 +5,11 @@
 # Copyright (c) 2026 Petr Krajník. All rights reserved.
 # SPDX-License-Identifier: BSD-3-Clause
 
-from pathlib import Path
-from typing  import List
-
 import argparse
-import numpy as np
 import sys
+from pathlib import Path
+
+import numpy as np
 import tifffile
 
 
@@ -18,16 +17,14 @@ def print_err(msg: str) -> None:
     print(f"ERROR: {msg}", file=sys.stderr)
 
 
-def load_images(img_paths: List[Path]) -> List[np.ndarray]:
+def load_images(img_paths: list[Path]) -> list[np.ndarray]:
     """Load input images as a list."""
     img_count = len(img_paths)
-    img_curr  = 0
     ref_shape = None
     ref_dtype = None
     images = []
-    for path in img_paths:
-        img_curr += 1
-        print(f"Loading image {img_curr}/{img_count} '{path}'")
+    for img_index, path in enumerate(img_paths, start=1):
+        print(f"Loading image {img_index}/{img_count} '{path}'")
         try:
             img = tifffile.imread(path)
             if ref_shape is None:
@@ -44,7 +41,7 @@ def load_images(img_paths: List[Path]) -> List[np.ndarray]:
                     f"match reference {ref_dtype}.")
             else:
                 images.append(img)
-        except Exception as e:
+        except (OSError, ValueError, NotImplementedError) as e:
             print_err(f"Failed to read '{path}': {e}")
     return images
 
@@ -53,12 +50,12 @@ def write_output_image(out_path: Path, image: np.ndarray) -> None:
     try:
         tifffile.imwrite(out_path, image)
         print(f"Median image saved to '{out_path}'")
-    except Exception as e:
+    except (OSError, ValueError) as e:
         print_err(f"Failed to write '{out_path}': {e}")
         sys.exit(1)
 
 
-def median_images(img_paths: List[Path], output: Path) -> None:
+def median_images(img_paths: list[Path], output: Path) -> None:
     """Load files, calculate median, and write the result."""
     images = load_images(img_paths)
 
