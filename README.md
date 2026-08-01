@@ -5,32 +5,19 @@ written in Python.
 
 Image median
 -----------
-Takes input images as a stack and compute median for every pixel.
-Minimum 3 valid input images are required. All input images must have
-the same size, channel count, pixel bit depth and data type.
+The script `img_median.py` takes input images, stacks them as layers
+and computes median across the layers of the image stack (Z-axis)
+for every pixel position.
 
-Basic usage:
-```
-python3 img_median.py data/*.tif
-```
-This does median from the data directory images and stores the output
-to a file named `median.tif` in the current working directory.
+See script [documentation](doc/img_median.md).
 
 Image offset
 ------------
-Uses phase correlation to calculate translation of images in a stack
-relative to a single anchor image. It does not modify the images, but
-only find the offsets.
+The script `img_offset.py` uses phase correlation to calculate the
+translation of images in a stack relative to a single anchor image.
+It does not modify the images but only finds the offsets.
 
-For more info see scripts own
-[repository](https://github.com/petrk23/img-offset).
-
-Basic usage:
-```
-python3 img_offset data/*.tif
-```
-It takes the first image as anchor image and calculates offset to all
-remaining images in the data directory.
+See script [documentation](doc/img_offset.md).
 
 Dependencies
 ------------
@@ -42,12 +29,8 @@ Install them with `pip install -r requirements.txt`, or any package
 manager you like. Best practice is to do that in an independent Python
 virtual environment (venv).
 
-No other, usually heavyweight, image processing packages needed!
-
-Limitations
------------
-* The scripts accepts only single-layer TIFF images.
+No other, usually heavyweight, image processing packages are needed!
 
 License
 -------
-BSD-3-Clause license. See the `LICENSE` file for full text.
+BSD-3-Clause license. See the [LICENSE](LICENSE) file for full text.
